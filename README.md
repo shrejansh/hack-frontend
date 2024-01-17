@@ -6,3 +6,5 @@ Steps to run
 3. run yarn install
 4. run yarn next dev
 5. Use an existing employee ID like emp1234 or create a new emp ID to login
+
+Deployed at: https://unrivaled-mermaid-ec924f.netlify.app/
