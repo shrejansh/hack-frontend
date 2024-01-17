@@ -11,12 +11,12 @@ import {
     Group,
     Button,
   } from '@mantine/core';
- import classes from './index.css';
  import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
  import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { post } from '../../api-handler';
 import useGlobal from '../store';
+import { notifications } from "@mantine/notifications";
 
  function AuthenticationTitle() {
     const router = useRouter();
@@ -27,20 +27,34 @@ import useGlobal from '../store';
     const [ empId, setEmpId ] = useState<string>('');
     async function handleSignIn(){
       const resp = await post('user', {employee_id: empId});
-      setEmployeeId(resp?.data?.employee_id);
-      setToken(resp?.data?.token);
+      if(resp?.success){
+        setEmployeeId(resp?.data?.employee_id);
+        setToken(resp?.data?.token);
+      }
+      if(!resp?.success){
+        notifications.show({
+          title: 'Error',
+          color: 'red',
+          message: `${resp?.message}`
+        });
+      }
       // console.log(token, employeeId, 'DEBUG after setting');
     }
     useEffect(()=> {
-      
       if(token && employeeId){
         console.log(token, employeeId, 'DEBUG token set');
-        router.push('/home')
+        router.push('/home');
+        notifications.show({
+          title: 'Success',
+          color: 'green',
+          message: `Successfully logged in`
+        });
       }
-    },[token, employeeId])
+    },[token, employeeId]);
+
     return (
       <Container size={420} my={40}>
-        <Title ta="center" className={classes.title}>
+        <Title ta="center" fw={900}>
           Welcome back!
         </Title>
         <Text c="dimmed" size="sm" ta="center" mt={5}>

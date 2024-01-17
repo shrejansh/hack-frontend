@@ -5,7 +5,7 @@ export async function get(endpoint: string){
     try{
         const response = await fetch(`${process.env.URL || LocalVariables.ENDPOINT}/${endpoint}`, {
             method: "GET",
-            mode: "cors",
+            // mode: "cors",
             headers: {
               "Content-type": "application/json",
               "Access-Control-Allow-Origin": process.env.URL || LocalVariables.ENDPOINT,
@@ -15,10 +15,17 @@ export async function get(endpoint: string){
             // body: JSON.stringify({employee_id: empId}),
           });
         const resp = await response.json();
-        console.log(resp, 'GOT THIS')
+        if(response.ok){
+          return {
+            success: true,
+            data: resp.data,
+            message: resp.message
+          };
+        }
         return {
+          success: false,
           data: resp.data,
-          message: resp.message,
+          message: resp.message
         };
     }catch(e: any){
         console.log('Error occurred while calling get API', e.message);
@@ -29,17 +36,23 @@ export async function post(endpoint: string, body: any){
   try{
       const response = await fetch(`${process.env.URL || LocalVariables.ENDPOINT}/${endpoint}`, {
           method: "POST",
-          mode: "cors",
           headers: {
             "Content-type": "application/json",
-            "Access-Control-Allow-Origin": process.env.URL || LocalVariables.ENDPOINT
-            // 'Access-Control-Allow-Origin': true,
+            "Access-Control-Allow-Origin": process.env.URL || LocalVariables.ENDPOINT,
+            "Authorization": `Bearer ${useGlobal.getState().token}`
           },
           body: JSON.stringify(body),
         });
       const resp = await response.json();
-      console.log(resp, 'GOT THIS')
+      if(response.ok){
+        return {
+          success: true,
+          data: resp.data,
+          message: resp.message
+        };
+      }
       return {
+        success: false,
         data: resp.data,
         message: resp.message
       };

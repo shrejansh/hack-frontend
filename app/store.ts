@@ -6,7 +6,7 @@ const useGlobal = create(
         employeeId: '',
         token: '',
         setEmployeeId: (employee_id: string) => set(() => ({ employeeId: employee_id })), 
-        setToken: (token: string) => set(() => ({ token: token }))
+        setToken: (token: string) => set(() => ({ token: token })),
     })
     ,{
         name:'global',
