@@ -15,9 +15,7 @@ export default function ChallengeForm(props: any){
     useEffect(()=> {
         async function fetchTags(){
             const records = await get('tags');
-            console.log(records, 'DEBUG data');
             if(records?.success){
-                console.log(records?.data, 'DEBUG data');
                 setTags(records?.data);
             }
         }

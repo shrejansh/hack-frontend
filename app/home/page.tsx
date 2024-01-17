@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { get } from "../../api-handler";
-import useStore from "../store";
-import { Card, Grid, Text, Affix, Button, Modal, Select } from "@mantine/core";
+import { Affix, Button, Modal, Select } from "@mantine/core";
 import Challenges from "./challenges";
 import ChallengeForm from "./challengeForm";
 import Header from "./header";
@@ -13,7 +12,7 @@ export default function HomePage(){
     const [ visible, setVisible ] = useState<boolean>(false);
     const [ contentVisible, setContentVisible ] = useState<boolean>(false);
     const [ sortBy, setSortBy ] = useState<string | null>('');
-    const token = useStore((state: any) => state.token);
+
     useEffect(()=> {
         async function getData() {
             const resp = await get(`challenge?sortBy=${sortBy}`);
@@ -22,7 +21,7 @@ export default function HomePage(){
         
         getData();
     },[sortBy]);
-    console.log(data, token, 'DEBUG something')
+
     return (
     <div style={{ padding: 50 }}>
         <Modal opened={visible} onClose={() => setVisible(false)} title="New Challenge">

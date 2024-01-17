@@ -1,18 +1,14 @@
 'use client'
 import {
     TextInput,
-    PasswordInput,
-    Checkbox,
     Anchor,
     Paper,
     Title,
     Text,
     Container,
-    Group,
     Button,
   } from '@mantine/core';
- import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
- import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { post } from '../../api-handler';
 import useGlobal from '../store';
@@ -25,6 +21,7 @@ import { notifications } from "@mantine/notifications";
     const setToken = useGlobal((state: any) => state.setToken);
     const employeeId = useGlobal((state: any) => state.employeeId);
     const [ empId, setEmpId ] = useState<string>('');
+
     async function handleSignIn(){
       const resp = await post('user', {employee_id: empId});
       if(resp?.success){
@@ -38,11 +35,9 @@ import { notifications } from "@mantine/notifications";
           message: `${resp?.message}`
         });
       }
-      // console.log(token, employeeId, 'DEBUG after setting');
     }
     useEffect(()=> {
       if(token && employeeId){
-        console.log(token, employeeId, 'DEBUG token set');
         router.push('/home');
         notifications.show({
           title: 'Success',
@@ -65,7 +60,7 @@ import { notifications } from "@mantine/notifications";
         </Text>
   
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <TextInput label="Email" placeholder="Enter 5 digit employee id" required onChange={(e) => setEmpId(e.target.value)}/>
+          <TextInput label="Employee ID" placeholder="Employee id" required onChange={(e) => setEmpId(e.target.value)}/>
           {/* <PasswordInput label="Password" placeholder="Your password" required mt="md" /> */}
           <Button fullWidth mt="xl" onClick={handleSignIn}>
             Sign in

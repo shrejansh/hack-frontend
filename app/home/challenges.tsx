@@ -26,7 +26,6 @@ export default function Challenges(props: any){
             if(anotherResp?.success){
                 const temp = anotherResp?.data;
                 const selectedChallenge = temp.filter((e: any) => e?.id === selected?.id);
-                console.log(selectedChallenge[0]?.upvotes, 'DEBUG challenge');
                 setNumUpvotes(selectedChallenge[0]?.upvotes);
             }
         }
@@ -37,10 +36,8 @@ export default function Challenges(props: any){
     async function handleUpvote(){
         const resp = await post('upvote', { upvote: !upvoted, employee_id: employeeId, idea_id: selected?.id });
         setUpvoted(!upvoted);
-        // setRefresh(!refresh);
     }
 
-    console.log(data, 'DEBUG whate happen')
     return(
         <>
         <Modal opened={visible} onClose={() => {setVisible(false);setContentVisible(false);}} title={selected?.name}>
@@ -51,18 +48,15 @@ export default function Challenges(props: any){
                 <Container>
                     {selected?.tags?.map((e) => (
                         <Badge key={e} 
-                        // color="red"
                         size="md" 
                         mt={16}
                         mx={8}>{e}</Badge>
                     ))}
                 </Container>
-                {/* <ActionIcon variant="filled" aria-label="Upvote" mt={16} style={{ alignSelf: 'flex-start'}} > */}
                 <Container mt={16} style={{ display: 'flex', flexDirection: 'row', float: 'right',  alignContent: 'center', alignItems: 'center' }}>
                   {upvoted ? <BiSolidUpvote onClick={handleUpvote} /> : <BiUpvote onClick={handleUpvote}/>}
                 <Text ml={8}>{numUpvotes}</Text>
                 </Container>
-                {/* </ActionIcon> */}
             </Card>
         </Modal>
         <Grid style={{ width: '70%' }}>

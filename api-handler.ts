@@ -57,6 +57,6 @@ export async function post(endpoint: string, body: any){
         message: resp.message
       };
   }catch(e: any){
-      console.log('Error occurred while calling get API', e.message);
+      console.log('Error occurred while calling post API', e.message);
   }
 };
