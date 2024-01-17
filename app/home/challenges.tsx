@@ -46,7 +46,7 @@ export default function Challenges(props: any){
                     {selected?.desc}
                 </Text>
                 <Container>
-                    {selected?.tags?.map((e) => (
+                    {selected?.tags?.map((e: any) => (
                         <Badge key={e} 
                         size="md" 
                         mt={16}

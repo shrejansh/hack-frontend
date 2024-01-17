@@ -68,7 +68,7 @@ export default function ChallengeForm(props: any){
                 autosize
                 />
             <Container my={16}>
-            {tags?.map((e) => (
+            {tags?.map((e: any) => (
                 <Badge
                 key={e.id}
                 onClick={() => handleTagSelection(e.id)} 

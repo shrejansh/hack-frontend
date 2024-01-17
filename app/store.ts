@@ -1,7 +1,18 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from 'zustand/middleware'
 
-const useGlobal = create(
+type State = {
+    employeeId: string
+    token: string
+  }
+  
+  type Action = {
+    setEmployeeId: (employeeId: State['employeeId']) => void
+    setToken: (token: State['token']) => void
+  }
+  
+
+const useGlobal = create<State & Action>()(
     persist((set) => ({
         employeeId: '',
         token: '',
